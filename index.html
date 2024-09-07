@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharique Akram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sharique Akram</h1>
+        <p> based out of nyc</br>
+            <br>started my career at KPMG and Deloitte leveraging VBA to automate Excel tasks </br>
+            <br> then, transitioned to the startup space in product and pre + post sales roles</br> 
+            <br> now, continuing to expand my horizons in Python and web development </br>
+        </p>
+    </header>
+
+    <main>
+        <section id="contact" class="section">
+            <h2>Contact Info <span style="font-size: 0.2em; font-weight: heavy;">if you care enough :)</span></h2>
+            <p><a href="#" onclick="copyEmail(event)">sharique.akram@gmail.com</a></p>
+            <script>
+                function copyEmail(e) {
+                    e.preventDefault();
+                    navigator.clipboard.writeText('sharique.akram@gmail.com').then(() => {
+                        alert('My email is copied to your clipboard, feel free to reach out!');
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                }
+            </script>
+            <p><a href="https://github.com/shariqueakram" target="_blank">Github</a></p>
+            <p><a href="https://www.linkedin.com/in/shariqueakram/" target="_blank">LinkedIn</a></p>
+        </section>
+    </main>
+
+    <nav>
+        <p>If you made it this far down <a href="https://docs.google.com/document/d/1cXaaQQak623W3sHXJtyjBN5xD4FOCJq-JN_W3xRSVYA/edit?usp=sharing">here</a> are my favorite movies</p>
+    </nav>
+
+    <footer>
+        <p>&copy; 2024 Sharique Akram. All rights reserved.</p>
+    </footer>
+</body>
+</html>
