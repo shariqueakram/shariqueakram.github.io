@@ -1,0 +1,16 @@
+This game was created for the Jellyfish Hackathon 2024 by Sharique, BK, Samad and Savannah
+Premise was for customers to have an overlayed game in case they run into any barbs with the product
+
+The end goal was to buy time for our Engineering Team 😅
+
+Backend of the game uses Phaser
+All asssets were either taken from the web or created on our own
+
+Instructions to play the game: 
+1. Open your code-editor (ideally VSCode)
+2. Clone the repository
+3. Download the "Live Server" extension
+4. Highlight / select the "index.html" file
+5. Hit the "Go Live" button on the bottom right
+6. Game should open in your default browser
+7. That's it -- you're ready to play now; the spacebar is the only key you need to use

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title> Jellyfish Game </title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">var config = {
+            type: Phaser.AUTO,
+            backgroundColor: '#71C5CF',
+            width: 400,
+            height: 490,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 1000 },
+                    debug: false
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+        var game = new Phaser.Game(config);
+        function preload() {
+
+            //Load the background
+            this.load.image('background', 'assets/background.png');
+            
+            // Load the bird sprite
+            this.load.spritesheet('bird', 'assets/barb.png', { frameWidth: 70, frameHeight: 64 } );
+            // Load the pipe sprite
+            this.load.image('pipe', 'assets/pipe.png');
+            // Add this line to check if the pipe image loaded successfully
+            this.load.on('complete', () => {
+                console.log("All assets loaded successfully");
+            });
+
+            // Load the jump sound
+            this.load.audio('jump', 'assets/jump.wav');
+        }
+        function create() {
+
+            //Display the background
+            this.add.image(200, 245, 'background');
+            
+            // Initialize gameIsOver flag
+            this.gameIsOver = false;
+
+            //Animate Jellyfish
+            this.anims.create({
+                key: 'barb',
+                frames: this.anims.generateFrameNumbers('bird', { start: 0, end: 3 }),
+                frameRate: 5,
+                repeat: -1
+            });
+
+            console.log("Create function started");
+            // Display the bird at the position x=100 and y=245
+            this.bird = this.physics.add.sprite(100, 245, 'bird');
+            console.log("Bird created:", this.bird);
+            // Create an empty group
+            this.pipes = this.physics.add.group();
+            console.log("Pipes group created:", this.pipes);
+            // Add score variable and text
+            this.score = 0;
+            this.scoreText = this.add.text(10, 10, 'Score: 0', 
+                { fontSize: '20px', fill: '#000', fontWeight: 'bold' }
+            );
+            this.scoreText.setOrigin(0, 0);  // Align to top-left corner
+            this.scoreText.setDepth(1);  // Ensure the score is always on top
+            // Define addOnePipe as a method of the scene
+            this.addOnePipe = (x, y) => {
+                console.log("Adding one pipe at", x, y);
+                // Create a pipe at the position x and y
+                var pipe = this.physics.add.sprite(x, y, 'pipe');
+                console.log("Pipe created:", pipe);
+                // Add the pipe to our previously created group
+                this.pipes.add(pipe);
+                // Add velocity to the pipe to make it move left
+                pipe.body.velocity.x = -200;
+                // Remove gravity for the pipe
+                pipe.body.allowGravity = false;
+                // Set pipe as immovable
+                pipe.setImmovable(true);
+                // Automatically kill the pipe when it's no longer visible
+                pipe.checkWorldBounds = true;
+                pipe.outOfBoundsKill = true;
+
+                // Add a flag to check if this pipe has been scored
+                pipe.scored = false;
+            }
+            // Define addRowOfPipes as a method of the scene
+            this.addRowOfPipes = () => {
+                console.log("Adding row of pipes");
+                // Randomly pick a number between 1 and 5
+                // This will be the hole position
+                var hole = Math.floor(Math.random() * 5) + 1;
+                
+                // Create a scoring zone for this set of pipes
+                var scoringZone = this.add.zone(350, 0, 60, this.sys.game.config.height);
+                this.physics.add.existing(scoringZone, true);
+                scoringZone.scored = false;
+
+                // Add the 6 pipes
+                // With one big hole at position 'hole' and 'hole + 1'
+                for (var i = 0; i < 8; i++) {
+                    if (i != hole && i != hole + 1) {
+                        this.addOnePipe(400, i * 60 + 10);
+                    }
+                }
+
+                // Move the scoring zone with the pipes
+                this.tweens.add({
+                    targets: scoringZone,
+                    x: -60,
+                    ease: 'Linear',
+                    duration: 3000,
+                    repeat: 0,
+                    onComplete: function() {
+                        scoringZone.destroy();
+                    }
+                });
+            }
+            // Add pipes every 1.5 seconds
+            this.pipeTimer = this.time.addEvent({
+                delay: 1500,
+                callback: this.addRowOfPipes,
+                callbackScope: this,
+                loop: true
+            });
+            console.log("Pipe timer created:", this.pipeTimer);
+            // Add this line to create the first row of pipes immediately
+            this.addRowOfPipes();
+            console.log("Create function completed");
+            this.physics.add.collider(this.bird, this.pipes);
+
+            // Add game over text and restart button
+            this.gameOverText = this.add.text(200, 200, 'Game Over', 
+                { fontSize: '32px', fill: '#000', fontWeight: 'bold' }
+            );
+            this.gameOverText.setOrigin(0.5);
+            this.gameOverText.setDepth(2);
+            this.gameOverText.visible = false;
+
+            this.restartButton = this.add.text(200, 250, 'Restart', 
+                { fontSize: '24px', fill: '#000', fontWeight: 'bold', backgroundColor: '#BAE21D', padding: { left: 10, right: 10, top: 5, bottom: 5 } }
+            );
+            this.restartButton.setOrigin(0.5);
+            this.restartButton.setInteractive({ useHandCursor: true });
+            this.restartButton.on('pointerdown', () => this.scene.restart());
+            this.restartButton.setDepth(2);
+            this.restartButton.visible = false;
+
+            // Create the jump sound
+            this.jumpSound = this.sound.add('jump', { volume: 0.2 });
+
+            // Define gameOver as a method of the scene
+            this.gameOver = function() {
+                if (!this.gameIsOver) {
+                    this.gameIsOver = true;
+                    this.physics.pause();
+                    this.bird.setTint(0xff0000);
+                    this.gameOverText.visible = true;
+                    this.restartButton.visible = true;
+                    if (this.pipeTimer) {
+                        this.pipeTimer.remove();
+                    }
+                    console.log("Game Over function called. Restart button should be visible.");
+                }
+            };
+        }
+        function update() {
+
+            this.bird.anims.play('barb', true);
+
+            // If the game is not over, check for input and update game state
+            if (!this.gameIsOver) {
+                // Jump when the spacekey is hit
+                if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE).isDown) {
+                    this.bird.body.velocity.y = -350;
+                    
+                    // Play the jump sound
+                    this.jumpSound.play();
+                } 
+
+                // If the bird is out of the screen (too high, too low, or too far left)
+                // Show game over screen
+                if (this.bird.y < 0 || this.bird.y > 490 || this.bird.x < -this.bird.width) {
+                    this.gameOver();
+                }
+
+                // Check for score incrementing
+                this.children.list.forEach((child) => {
+                    if (child.type === 'Zone' && !child.scored && child.x < this.bird.x + this.bird.width / 2) {
+                        this.score += 1;
+                        this.scoreText.setText('Score: ' + this.score);
+                        child.scored = true;
+                        console.log("Score incremented. New score:", this.score);
+                    }
+                });
+
+                // Add this block to remove pipes that have moved off-screen
+                this.pipes.getChildren().forEach((pipe) => {
+                    if (pipe.x < -pipe.width) {
+                        console.log("Removing pipe from game");
+                        this.pipes.remove(pipe, true, true);
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
