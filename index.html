@@ -11,10 +11,11 @@
             color: #333;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px; /* Reduced padding */
         }
         h1 {
             color: #2c3e50;
+            margin-bottom: 10px; /* Added margin to reduce space below h1 */
         }
         a {
             color: #3498db;
@@ -24,14 +25,21 @@
             text-decoration: underline;
         }
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Reduced margin between sections */
+        }
+        .section li p {
+            margin: 0; /* Remove margin from paragraphs in list items */
+        }
+        header {
+            margin-bottom: 10px; /* Added margin to reduce space below header */
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Sharique Akram</h1>
-        <h6> <i>page is currently under 🚧 </i></h6>
+        <h1>Sharique Akram
+        <h6 style="margin-top: -10px;"> <i>page is currently under 🚧 <p style="font-size: smaller;">less > more just like in the cli</p>
+        </i></h6></h1>
         <p> based out of nyc</br>
             <br>started my career at KPMG and Deloitte leveraging VBA to automate Excel tasks </br>
             <br> then, transitioned to the startup world where i worked in product and post sales roles</br> 
@@ -40,8 +48,18 @@
     </header>
 
     <main>
+        <section class="section">
+            <h1>Personal Projects</h1>
+            <ul>
+                <li>
+                    <p><a href="jellyfish_hackathon-main/jellyfish_game.html">Jellyfish Hackathon game</a></p>
+                    <p style="font-size: .75em; font-style: italic;">A game developed for the 2024 Jellyfish Hackathon, created using Phaser</p>
+                </li>
+            </ul>
+        </section>
+
         <section id="contact" class="section">
-            <h2>Contact Info <span style="font-size: 0.2em; font-weight: heavy;">if you care enough :)</span></h2>
+            <h2>Contact Info <span style="font-size: 0.2em; font-weight: heavy;"></span></h2>
             <p><a href="#" onclick="copyEmail(event)">sharique.akram@gmail.com</a></p>
             <script>
                 function copyEmail(e) {
@@ -55,11 +73,6 @@
             </script>
             <p><a href="https://github.com/shariqueakram" target="_blank">GitHub</a></p>
             <p><a href="https://www.linkedin.com/in/shariqueakram/" target="_blank">LinkedIn</a></p>
-        </section>
-        
-        <section class="section">
-            <h2>Jellyfish 2024 Hackathon game</h2>
-            <p><a href="jellyfish_hackathon-main/jellyfish_game.html">Click here to play</a></p>
         </section>
     </main>
 
