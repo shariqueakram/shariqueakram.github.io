@@ -1,5 +1,5 @@
 # shariqueakram.github.io
 
-In the interest of standing up a webpage at the minimum, I did so using GitHub pages and purchased the domain (sharique.xyz) from SquareSpace 
+In the interest of knowing how to at least standup a webpage, I used GitHub pages 
 
-Will iterate on the site in the future 
+Domain was purchased through SquareSpace 
