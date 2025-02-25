@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharique Akram</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 10px; /* Reduced padding */
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
         }
         h1 {
             color: #2c3e50;
-            margin-bottom: 10px; /* Added margin to reduce space below h1 */
+            margin: 0;
+        }
+        h6 {
+            margin: 0;
+            font-weight: normal;
         }
         a {
             color: #3498db;
@@ -24,63 +31,129 @@
         a:hover {
             text-decoration: underline;
         }
-        .section {
-            margin-bottom: 20px; /* Reduced margin between sections */
+        .contact {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
         }
-        .section li p {
-            margin: 0; /* Remove margin from paragraphs in list items */
+        .contact a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        header {
-            margin-bottom: 10px; /* Added margin to reduce space below header */
+        .contact img {
+            width: 32px;
+            height: 32px;
         }
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%; /* Position above the link */
+            left: 50%;
+            margin-left: -110px; /* Adjust to center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Overlay style for dimming the background */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1; 
+            opacity: 0;
+            transition: opacity 0.3s; /* Adjust transition speed here, seems to be good right now 2/24/2025*/
+        }
+        .dimmed .overlay {
+            opacity: 2;
+        }
+
     </style>
 </head>
 <body>
+    <div class="overlay"></div> <!-- Background dimming overlay -->
     <header>
-        <h1>Sharique Akram
-        <h6 style="margin-top: -10px;"> <i>page is currently under 🚧 <p style="font-size: smaller;">less > more just like in the cli</p>
-        </i></h6></h1>
-        <p> based out of nyc</br>
-            <br>started my career at KPMG and Deloitte leveraging VBA to automate Excel tasks </br>
-            <br> then, transitioned to the startup world where i worked in product and post sales roles</br> 
-            <br> now, continuing to expand my horizons with a focus on backend developer knowledge </br>
-        </p>
+        <h1>Sharique Akram</h1>
+        <h6><i class="fas fa-home"></i> New York City</h6>
+        <p>Accountant turned Software Developer</p>
     </header>
     <main>
-        <section class="section">
-            <h1>Personal Projects</h1>
-            <ul>
-                <li>
-                    <p><a href="./jellyfish">Jellyfish Hackathon game</a></p>
-                    <p style="font-size: .75em; font-style: italic;">A game developed for the 2024 Jellyfish Hackathon, created using Phaser</p>
-                </li>
-            </ul>
+        <section>
+            <h2>Projects</h2>
+            <p><a href="https://github.com/shariqueakram/Asteroid_game/blob/main/README.md" class="tooltip">Guessing<span class="tooltip-text">I was bored one weekend and used this project as motivation to code more regularly</span></a></p>
+            <p>
+                <a href="./jellyfish" class="tooltip">Jellyfish
+                <span class="tooltip-text">Used Phaser to create a game for the '24 Jellyfish Hackathon. Took inspiration from Flappybird and Chrome Dino</span>
+            </a></p>
+            <p><a href="https://github.com/shariqueakram/Asteroid_game/blob/main/README.md" class="tooltip">Asteroid<span class="tooltip-text">Started diving deeper 
+                into the game development potential of Python</span></a></p>
         </section>
-
-        <section id="contact" class="section">
-            <h2>Contact Info <span style="font-size: 0.2em; font-weight: heavy;"></span></h2>
-            <p><a href="#" onclick="copyEmail(event)">sharique.akram@gmail.com</a></p>
-            <script>
-                function copyEmail(e) {
-                    e.preventDefault();
-                    navigator.clipboard.writeText('sharique.akram@gmail.com').then(() => {
-                        alert('My email is copied to your clipboard, feel free to reach out!');
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-                }
-            </script>
-            <p><a href="https://github.com/shariqueakram" target="_blank">GitHub</a></p>
-            <p><a href="https://www.linkedin.com/in/shariqueakram" target="_blank">LinkedIn</a></p>
+        <section>
+            <h2>Contact</h2>
+            <div class="contact">
+                <a href="https://www.linkedin.com/in/shariqueakram" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn">
+                </a>
+                <a href="https://github.com/shariqueakram" target="_blank">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
+                </a>
+                <a href="shariqueakram@gmail.com" onclick="copyEmail(event)">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email">
+                </a>
+            </div>
         </section>
     </main>
-
-    <nav>
-        <p>If you made it this far down <a href="https://docs.google.com/document/d/1cXaaQQak623W3sHXJtyjBN5xD4FOCJq-JN_W3xRSVYA/edit?usp=sharing">here</a> are my favorite movies</p>
-    </nav>
-
     <footer>
-        <p>&copy; 2024 Sharique Akram. All rights reserved.</p>
+        <p>&copy; 2025 Sharique Akram</p>
     </footer>
+    <script>
+        // Copy email to clipboard function
+        function copyEmail(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText('sharique.akram@gmail.com').then(() => {
+                alert('Email copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Add the 'dimmed' class when a tooltip is hovered
+        const tooltips = document.querySelectorAll('.tooltip');
+        const body = document.querySelector('body');
+
+        tooltips.forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', () => {
+                body.classList.add('dimmed');
+            });
+
+            tooltip.addEventListener('mouseleave', () => {
+                body.classList.remove('dimmed');
+            });
+        });
+    </script>
 </body>
 </html>
